@@ -7,6 +7,7 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:ecg_buffer/exchange_bloc.dart';
+import 'package:ecg_buffer/message_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ecg_buffer/main.dart';
@@ -36,6 +37,31 @@ void main() {
       expect(data, 'test_data');
 
     });
+
+    test('MessageHandler sends message correctly', () async {
+      final handler = MessageHandler();
+      // Subscribe and get message
+      expect(handler.messages, emits('Hello'));
+
+      // Send message
+      handler.sendMessage('Hello');
+
+      handler.dispose();
+    });
+
+
+    test('MessageHandler sends and receive message correctly', () async {
+      final handler = MessageHandler();
+
+      // Subscribing and get message
+      handler.messages.listen((message) {
+        print('Receive message: $message');
+        handler.dispose();
+      });
+
+      // Send message
+      handler.sendMessage('Hello from Dart!');    });
+
   });
 
 }
