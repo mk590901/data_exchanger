@@ -56,11 +56,15 @@ void main() {
       // Subscribing and get message
       handler.messages.listen((message) {
         print('Receive message: $message');
-        handler.dispose();
+        //handler.dispose();
       });
 
       // Send message
-      handler.sendMessage('Hello from Dart!');    });
+      handler.sendMessage('Hello from Dart!');
+
+      handler.dispose();
+
+    });
 
   });
 
