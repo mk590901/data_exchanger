@@ -50,8 +50,8 @@ void main() {
     });
 
 
-    test('MessageHandler sends and receive message correctly', () async {
-      final handler = MessageHandler();
+    test('MessageHandler sends and receive string message correctly', () async {
+      final handler = MessageHandler<String>();
 
       // Subscribing and get message
       handler.messages.listen((message) {
@@ -61,6 +61,22 @@ void main() {
 
       // Send message
       handler.sendMessage('Hello from Dart!');
+
+      handler.dispose();
+
+    });
+
+    test('MessageHandler sends and receive array message correctly', () async {
+      final handler = MessageHandler<List<double>>();
+
+      // Subscribing and get message
+      handler.messages.listen((message) {
+        print('Receive message: $message');
+        //handler.dispose();
+      });
+
+      // Send message
+      handler.sendMessage([1.1,1.2,1.3,1.4]);
 
       handler.dispose();
 

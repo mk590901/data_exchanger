@@ -1,10 +1,10 @@
 import 'dart:async';
 
-class MessageHandler {
+class MessageHandler<T> {
   final _controller = StreamController.broadcast();
 
   // Send message
-  void sendMessage(String message) {
+  void sendMessage(T message) {
     _controller.add(message);
   }
 
