@@ -22,6 +22,10 @@ void get() {
   print ('Get Data');
 }
 
+void outFun(List<double> list) {
+  print ('Get Data II->$list');
+}
+
 void main() {
 
   group('ExchangeBloc', () {
@@ -107,8 +111,8 @@ void main() {
 
     });
 
-    test('Exchange buffer', () {
-      ExchangeBuffer buffer = ExchangeBuffer(8);
+    test('Exchange buffer I', () {
+      ExchangeBuffer buffer = ExchangeBuffer(8, null);
       List<double> rowData = buffer.read(4);
       expect(rowData,[]);
       buffer.write([1,2,3,4]);
@@ -121,8 +125,16 @@ void main() {
       expect(rowData,[]);
     });
 
-
-
+    test('Exchange buffer II', () {
+      ExchangeBuffer buffer = ExchangeBuffer(8, outFun);
+      buffer.get(4);
+      buffer.put([1,2,3,4]);
+      buffer.put([5,6,7,8]);
+      buffer.get(4);
+      buffer.get(4);
+      buffer.get(4);
+      buffer.dispose();
+    });
 
   });
 
