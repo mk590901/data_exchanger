@@ -7,10 +7,20 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:ecg_buffer/exchange_bloc.dart';
+import 'package:ecg_buffer/exchange_buffer.dart';
 import 'package:ecg_buffer/message_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ecg_buffer/main.dart';
+
+
+void put() {
+  print ('Put Data');
+}
+
+void get() {
+  print ('Get Data');
+}
 
 void main() {
 
@@ -72,8 +82,7 @@ void main() {
       // Subscribing and get message
       handler.messages.listen((message) {
         print('Receive message: $message');
-        //handler.dispose();
-      });
+       });
 
       // Send message
       handler.sendMessage([1.1,1.2,1.3,1.4]);
@@ -81,6 +90,39 @@ void main() {
       handler.dispose();
 
     });
+
+    test('MessageHandler with callbacks', () async {
+      final handler = MessageHandler<VoidCallback?>();
+
+      // Subscribing and get message
+      handler.messages.listen((callback) {
+        callback?.call();
+      });
+
+      // Send message
+      handler.sendMessage(put);
+      handler.sendMessage(put);
+      handler.sendMessage(get);
+      handler.dispose();
+
+    });
+
+    test('Exchange buffer', () {
+      ExchangeBuffer buffer = ExchangeBuffer(8);
+      List<double> rowData = buffer.read(4);
+      expect(rowData,[]);
+      buffer.write([1,2,3,4]);
+      buffer.write([5,6,7,8]);
+      rowData = buffer.read(4);
+      expect(rowData,[1,2,3,4]);
+      rowData = buffer.read(4);
+      expect(rowData,[5,6,7,8]);
+      rowData = buffer.read(4);
+      expect(rowData,[]);
+    });
+
+
+
 
   });
 
