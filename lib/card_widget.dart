@@ -26,11 +26,11 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
 
   bool disposed_ = false;
 
-  final MaterialStateProperty<Color?> trackColor =
-  MaterialStateProperty.resolveWith<Color?>(
-        (Set<MaterialState> states) {
+  final WidgetStateProperty<Color?> trackColor =
+  WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) {
       // Track color when the switch is selected.
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.lightBlue;
       }
       // Otherwise return null to set default track color
@@ -38,20 +38,20 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
     },
   );
 
-  final MaterialStateProperty<Icon?> thumbIconRun =
-  MaterialStateProperty.resolveWith<Icon?>(
-        (Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+  final WidgetStateProperty<Icon?> thumbIconRun =
+  WidgetStateProperty.resolveWith<Icon?>(
+        (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return const Icon(Icons.play_arrow_sharp);
       }
       return const Icon(Icons.pause_sharp);
     },
   );
 
-  final MaterialStateProperty<Icon?> thumbIconMode =
-  MaterialStateProperty.resolveWith<Icon?>(
-        (Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+  final WidgetStateProperty<Icon?> thumbIconMode =
+  WidgetStateProperty.resolveWith<Icon?>(
+        (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return const Icon(Icons.equalizer_sharp);
       }
       return const Icon(Icons.monitor_heart_outlined);
@@ -94,7 +94,8 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                 fontStyle: FontStyle.italic)),
           ),
           widget.graphWidget,
-          ButtonBar(
+          OverflowBar(
+          //overflowAlignment: OverflowBarAlignment. start,
           children: <Widget>[
 
             Switch(
