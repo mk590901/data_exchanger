@@ -6,6 +6,9 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:ecg_buffer/ecg_sensor/ecg_observer.dart';
+import 'package:ecg_buffer/ecg_sensor/ecg_sensor.dart';
+import 'package:ecg_buffer/ecg_simulator/ecg_simulator.dart';
 import 'package:ecg_buffer/exchange_bloc.dart';
 import 'package:ecg_buffer/exchange_buffer.dart';
 import 'package:ecg_buffer/message_handler.dart';
@@ -135,6 +138,21 @@ void main() {
       buffer.get(4);
       buffer.dispose();
     });
+
+    test('Exchange buffer III', () async {
+      ExchangeBuffer buffer = ExchangeBuffer(8, outFun);
+      EcgSimulator simulator = EcgSimulator(4);
+      ECGSensor sensor = ECGSensor(simulator, buffer);
+      ECGObserver observer = ECGObserver(4,buffer);
+      observer.start();
+      sensor.start();
+      await Future.delayed(Duration(milliseconds:4000));
+      sensor.stop();
+      await Future.delayed(Duration(milliseconds:1000));
+      observer.stop();
+      buffer.dispose();
+    });
+
 
   });
 

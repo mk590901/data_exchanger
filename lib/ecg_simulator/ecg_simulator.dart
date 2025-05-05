@@ -27,6 +27,15 @@ class EcgSimulator {
     return buffer;
   }
 
+  List<double> generateECGData() {
+    List<double> buffer = [];
+    var [time, voltage, peak] = generator.generateBuffer(samplingFrequency);
+    for (int j = 0; j < time.length; j++) {
+      buffer.add(voltage[j] as double);
+    }
+    return buffer;
+  }
+
   void setSamplingFrequency(int value) {
     param.setSfEcg(value);
     param.setSf(value*2);
