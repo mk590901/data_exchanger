@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="ecg_buffer"
+        android:label="ECG simulator"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/cardiology">
         <activity
             android:name=".MainActivity"
             android:exported="true"
