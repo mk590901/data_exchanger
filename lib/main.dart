@@ -80,13 +80,11 @@ abstract class ItemEvent {}
 
 class AddItemEvent extends ItemEvent {
   final CustomCardWidget item;
-
   AddItemEvent(this.item);
 }
 
 class RemoveItemEvent extends ItemEvent {
   final CustomCardWidget item;
-
   RemoveItemEvent(this.item);
 }
 

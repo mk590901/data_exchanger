@@ -96,6 +96,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
           widget.graphWidget,
           OverflowBar(
           //overflowAlignment: OverflowBarAlignment. start,
+          alignment: MainAxisAlignment.end,
           children: <Widget>[
 
             Switch(

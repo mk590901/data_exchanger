@@ -100,13 +100,6 @@ class StoreWrapper {
       }
     }
     else {
-      // minV = rowData[0]!;
-      // for (int i = 1; i < buffer_.size(); i++) {
-      //   if (rowData[i]! < minV) {
-      //     minV = rowData[i]!;
-      //   }
-      // }
-
       minV = rowData[0]?? 0;
       for (int i = 1; i < buffer_.size(); i++) {
         int? value = rowData[i];
@@ -116,7 +109,6 @@ class StoreWrapper {
           }
         }
       }
-
     }
     return minV.toDouble();
   }
@@ -136,13 +128,6 @@ class StoreWrapper {
       }
     }
     else {
-      // maxV = rowData[0]!;
-      // for (int i = 1; i < buffer_.size(); i++) {
-      //   if (rowData[i]! > maxV) {
-      //     maxV = rowData[i]!;
-      //   }
-      // }
-
       maxV = rowData[0]?? 0;
       for (int i = 1; i < buffer_.size(); i++) {
         int? value = rowData[i];
@@ -176,7 +161,6 @@ class StoreWrapper {
     double coeff = (height - 2 * shiftH).toDouble()/dv;
     if (coeff.isInfinite) {
       coeff = -1.0;
-      //return [];
     }
 
     List<int> dataTemp = (_mode == GraphMode.overlay)
