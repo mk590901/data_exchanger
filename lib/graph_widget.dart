@@ -45,6 +45,7 @@ class GraphWidget extends StatelessWidget {
 
   void stop() {
     obtain.stop(uuid);
+    storeWrapper.stop();
   }
 
   void onChangeMode() {
@@ -99,5 +100,10 @@ class GraphWidget extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  void dispose() {
+    obtain.stop(uuid);
+    storeWrapper.stop();
   }
 }

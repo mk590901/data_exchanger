@@ -76,6 +76,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
     print ("******* refreshAction *******");
     if (disposed_) {
       print ("******* refreshAction.leave *******");
+      return;
     }
     setState(() {
     });
