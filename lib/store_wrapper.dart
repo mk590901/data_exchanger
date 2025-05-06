@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'circular_buffer.dart';
+import 'ecg_sensor/ecg_sensor.dart';
 import 'ecg_simulator/ecg_simulator.dart';
 import 'exchange_buffer.dart';
 import 'graph_mode.dart';
@@ -16,6 +17,7 @@ class StoreWrapper {
 
   late EcgSimulator simulator;
   late ExchangeBuffer exchangeBuffer;
+  late ECGSensor sensor;
 
   late  double  step;
   late  Path    path;
@@ -33,12 +35,18 @@ class StoreWrapper {
   StoreWrapper(this._seriesLength, this._seriesNumber, this._drawSeriesLength, this._mode) {
     simulator = EcgSimulator(_seriesLength);
     exchangeBuffer = ExchangeBuffer(_seriesLength*2, outFun);
+    sensor = ECGSensor(simulator, exchangeBuffer);
     rowData = List<int>.filled(_seriesLength, 0);
     buffer_ = CircularBuffer<int>(_seriesLength*_seriesNumber);
   }
 
   void outFun(List<double> list) {
-    print ('Get Data II->$list');
+    //print ('Get Data II->$list');
+    for (int i = 0; i < list.length; i++) {
+      double doubleValue = list[i];
+      int intValue = (doubleValue * 1000).toInt();
+      rowData[i] = intValue;
+    }
   }
 
   CircularBuffer<int> buffer() {
@@ -53,15 +61,24 @@ class StoreWrapper {
     return _drawSeriesLength;
   }
 
+  void start() {
+    sensor.start();
+  }
+
+
+  void stop() {
+    sensor.stop();
+  }
+
   void updateBuffer(final int counter) {
     int seriesSize = seriesLength();
 
     if ((counter-1) == 0) {
-      // exchangeBuffer.get(_seriesLength);
-      List<int> buffer = simulator.generateBuffer();
-      for (int i = 0; i < buffer.length; i++) {
-        rowData[i] = buffer[i];
-      }
+      exchangeBuffer.get(_seriesLength);
+      // List<int> buffer = simulator.generateBuffer();
+      // for (int i = 0; i < buffer.length; i++) {
+      //   rowData[i] = buffer[i];
+      // }
     }
 
     List<int> dataExtracted = extractRangeData(rowData, (counter-1)*seriesSize, seriesSize);
@@ -83,12 +100,23 @@ class StoreWrapper {
       }
     }
     else {
-      minV = rowData[0]!;
+      // minV = rowData[0]!;
+      // for (int i = 1; i < buffer_.size(); i++) {
+      //   if (rowData[i]! < minV) {
+      //     minV = rowData[i]!;
+      //   }
+      // }
+
+      minV = rowData[0]?? 0;
       for (int i = 1; i < buffer_.size(); i++) {
-        if (rowData[i]! < minV) {
-          minV = rowData[i]!;
+        int? value = rowData[i];
+        if (value != null) {
+          if (value < minV) {
+            minV = value;
+          }
         }
       }
+
     }
     return minV.toDouble();
   }
@@ -108,12 +136,23 @@ class StoreWrapper {
       }
     }
     else {
-      maxV = rowData[0]!;
+      // maxV = rowData[0]!;
+      // for (int i = 1; i < buffer_.size(); i++) {
+      //   if (rowData[i]! > maxV) {
+      //     maxV = rowData[i]!;
+      //   }
+      // }
+
+      maxV = rowData[0]?? 0;
       for (int i = 1; i < buffer_.size(); i++) {
-        if (rowData[i]! > maxV) {
-          maxV = rowData[i]!;
+        int? value = rowData[i];
+        if (value != null) {
+          if (value > maxV) {
+            maxV = value;
+          }
         }
       }
+
     }
     return maxV.toDouble();
   }
@@ -135,6 +174,9 @@ class StoreWrapper {
     double dv = maxV - minV;
     step = width/(buffer_.capacity()).toDouble();
     double coeff = (height - 2 * shiftH).toDouble()/dv;
+    if (coeff.isInfinite) {
+      coeff = 1.0;
+    }
 
     List<int> dataTemp = (_mode == GraphMode.overlay)
         ? dataSeriesOverlay(buffer_)

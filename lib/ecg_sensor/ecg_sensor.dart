@@ -30,7 +30,7 @@ class ECGSensor {
 
   void _callbackFunction() {
     List<double> rowData = simulator.generateECGData();
-    outFun(rowData);
+    //outFun(rowData);  // Only debug
     exchangeBuffer.put(rowData);
   }
 

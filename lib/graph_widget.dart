@@ -55,9 +55,11 @@ class GraphWidget extends StatelessWidget {
   void onStartStop() {
     _startStop = !_startStop;
     if (_startStop) {
+      storeWrapper.start();
       obtain.start(uuid);
     } else {
       obtain.stop(uuid);
+      storeWrapper.stop();
     }
     onRefreshWidgetAction();
   }

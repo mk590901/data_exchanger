@@ -32,6 +32,9 @@ class CircularBuffer<T> {
 
   void writeRow(List<T> list) {
     //print ('Circular.writeRow->$_writeIndex [${list.length}]');
+    if (list.isEmpty) {
+      return;
+    }
     for (var element in list) {
       write(element);
     }
