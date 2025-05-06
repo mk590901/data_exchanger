@@ -175,7 +175,8 @@ class StoreWrapper {
     step = width/(buffer_.capacity()).toDouble();
     double coeff = (height - 2 * shiftH).toDouble()/dv;
     if (coeff.isInfinite) {
-      coeff = 1.0;
+      coeff = -1.0;
+      //return [];
     }
 
     List<int> dataTemp = (_mode == GraphMode.overlay)
@@ -190,6 +191,9 @@ class StoreWrapper {
 
   Path preparePath(final List<double> data) {
     Path path = Path();
+    if (data.isEmpty) {
+      return path;
+    }
     path.moveTo(0, data[0]);
     for (int i = 1; i < data.length; i++) {
       path.lineTo(i * step, data[i]);
@@ -201,6 +205,9 @@ class StoreWrapper {
     int idx_ = buffer_.writeIndex()-1;
     int idx = idx_ < 0 ? 0 : idx_;
     Path path = Path();
+    if (data.isEmpty) {
+      return path;
+    }
     path.moveTo(0, data[0]);
     for (int i = 1; i < idx; i++) {
       path.lineTo(i * step, data[i]);
@@ -212,6 +219,9 @@ class StoreWrapper {
     int idx_ = buffer_.writeIndex()-1;
     int idx = idx_ < 0 ? 0 : idx_;
     Path path = Path();
+    if (data.isEmpty) {
+      return path;
+    }
     path.moveTo(idx * step, data[idx]);
     for (int i = idx; i < data.length; i++) {
       path.lineTo(i * step, data[i]);
@@ -220,6 +230,10 @@ class StoreWrapper {
   }
 
   Offset preparePoint(final List<double> data) {
+    if (data.isEmpty) {
+      return Offset(0,0);
+    }
+
     int idx_ = buffer_.writeIndex()-1;
     int idx = idx_ < 0 ? 0 : idx_;
     Offset? point = Offset(idx * step, data[idx]);
