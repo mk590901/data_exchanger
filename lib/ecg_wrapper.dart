@@ -133,7 +133,6 @@ class ECGWrapper {
           }
         }
       }
-
     }
     return maxV.toDouble();
   }
