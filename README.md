@@ -49,7 +49,116 @@ void main() {
 
 For this purpose, the __DataExchanger__ class was created, which is accessible to the object writing the data, as well as the object reading this data.
 
-The put and get operations of the __DataExchanger__ class use the previously created MessageHandler class.
+```dart
+import 'dart:collection';
+import 'callback_fun_type.dart';
+import 'circular_buffer.dart';
+import 'message_handler.dart';
+
+class DataExchanger {
+  late  CircularBuffer<double> buffer_;
+  final int _bufferLength;
+  final Queue<List<double>>	_dataQueue	= Queue<List<double>>();
+  final Queue<int>	_sizeQueue	= Queue<int>();
+  final MessageHandler handler = MessageHandler<VoidCallback?>();
+  final ListCallback? callback;
+
+  DataExchanger(this._bufferLength, this.callback) {
+    buffer_ = CircularBuffer<double>(_bufferLength + 1);
+    handler.messages.listen((callback) {
+      callback?.call();
+    });
+
+  }
+
+  CircularBuffer<double> buffer() {
+    return buffer_;
+  }
+
+  void write(List<double> rowData) {
+    if (rowData.isEmpty) {
+      return;
+    }
+    buffer_.writeRow(rowData);
+  }
+
+  void put(List<double> rowData) {
+    _dataQueue.add(rowData);
+    handler.sendMessage(putData);
+  }
+
+  void get(int orderedSize) {
+    _sizeQueue.add(orderedSize);
+    handler.sendMessage(getData);
+  }
+
+  List<double>  read(int orderedSize) {
+    if (orderedSize <= 0) {
+      return [];
+    }
+    return buffer_.readRow(orderedSize);
+  }
+
+  void dispose() {
+    handler.dispose();
+  }
+
+  void putData() {
+    if (_dataQueue.isEmpty) {
+      return;
+    }
+    List<double> data = _dataQueue.removeFirst();
+    write(data);
+  }
+
+  void getData() {
+    if (_sizeQueue.isEmpty) {
+      return;
+    }
+    int orderedSize = _sizeQueue.removeFirst();
+    List<double>  out = read(orderedSize);
+    callback?.call(out);
+
+  }
+}
+
+```
+
+The __put__ and __get__ operations of the __DataExchanger__ class use the previously created __MessageHandler__ class.
+
+
+## __DataExchanger__ class usage
+
+```dart
+test('Exchanger II', () {
+      DataExchanger exchanger = DataExchanger(8, outFun);
+      exchanger.get(4);
+      exchanger.put([1,2,3,4]);
+      exchanger.put([5,6,7,8]);
+      exchanger.get(4);
+      exchanger.get(4);
+      exchanger.get(4);
+      exchanger.dispose();
+    });
+```
+
+and
+
+```dart
+    test('Exchanger III', () async {
+      DataExchanger exchanger = DataExchanger(8, outFun);
+      EcgSimulator simulator = EcgSimulator(4);
+      ECGSensor sensor = ECGSensor(simulator, exchanger);
+      ECGObserver observer = ECGObserver(4,exchanger);
+      observer.start();
+      sensor.start();
+      await Future.delayed(Duration(milliseconds:4000));
+      sensor.stop();
+      await Future.delayed(Duration(milliseconds:1000));
+      observer.stop();
+      exchanger.dispose();
+    });
+```
 
 ## Movie
 
