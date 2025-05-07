@@ -5,7 +5,6 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:bloc_test/bloc_test.dart';
 import 'ecg_observer.dart';
 import 'package:ecg_buffer/ecg_sensor/ecg_sensor.dart';
 import 'package:ecg_buffer/ecg_simulator/ecg_simulator.dart';
@@ -14,8 +13,6 @@ import 'package:ecg_buffer/data_exchanger.dart';
 import 'package:ecg_buffer/message_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ecg_buffer/main.dart';
-
 
 void put() {
   print ('Put Data');
