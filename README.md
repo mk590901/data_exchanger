@@ -162,7 +162,7 @@ and
 
 ## Movie
 
-As can be seen from the movie, the behavior of the application practically does not change. The only thing that distinguishes it from the previous version is that the display of the ECG signal begins with a straight line: this is the effect of a second delay when the circular buffer is filled with the ECG signal.
+As can be seen from the movie, the behavior of the application practically does not change. The only thing that distinguishes it from the previous version is that the display of the __ECG signal__ begins with a straight line: this is the effect of a second delay when the circular buffer is filled with the __ECG__ signal.
 
 https://github.com/user-attachments/assets/32f6726a-8148-4901-aaa9-7a6f08d3c996
 
