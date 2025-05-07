@@ -4,7 +4,7 @@ The presented application is a development of the https://github.com/mk590901/li
 
 ## Introduction
 
-The process of generating an ECG signal and the process of displaying it are in this app version logically separated and isolated from each other. There is a cyclic buffer through which data is exchanged. The ECG generator writes data to this buffer, and the display system reads them and displays them in the widget.
+The process of generating an __ECG__ signal and the process of displaying it are in this app version logically separated and isolated from each other. There is a cyclic buffer through which data is exchanged. The __ECG__ generator writes data to this buffer, and the display system reads them and displays them in the widget.
 
 Despite the fact that the cyclic buffer allows you to correctly overlap read/write operations without restrictions, I decided to use the mechanism of sending and processing messages for synchronization, widely used, for example, in Java. The only problem is that there is no direct analogue of message handling in dart. However, there is __StreamController__, which can be used for this purpose. An example of implementation is given below.
 
