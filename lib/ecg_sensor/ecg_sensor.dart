@@ -6,12 +6,12 @@ import '../data_exchanger.dart';
 class ECGSensor {
   static int PERIOD = 1000;
   final EcgSimulator simulator;
-  final DataExchanger exchangeBuffer;
+  final DataExchanger exchanger;
   final Duration _period = Duration(milliseconds: PERIOD);
 
   late Timer? _timer;
 
-  ECGSensor (this.simulator, this.exchangeBuffer);
+  ECGSensor (this.simulator, this.exchanger);
 
   void start() {
     print ('------- ECGSensor.start -------');
@@ -31,7 +31,7 @@ class ECGSensor {
   void _callbackFunction() {
     List<double> rowData = simulator.generateECGData();
     //outFun(rowData);  // Only debug
-    exchangeBuffer.put(rowData);
+    exchanger.put(rowData);
   }
 
   void outFun(List<double> list) {

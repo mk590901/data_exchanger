@@ -114,43 +114,43 @@ void main() {
 
     });
 
-    test('Exchange buffer I', () {
-      DataExchanger buffer = DataExchanger(8, null);
-      List<double> rowData = buffer.read(4);
+    test('Exchanger I', () {
+      DataExchanger exchanger = DataExchanger(8, null);
+      List<double> rowData = exchanger.read(4);
       expect(rowData,[]);
-      buffer.write([1,2,3,4]);
-      buffer.write([5,6,7,8]);
-      rowData = buffer.read(4);
+      exchanger.write([1,2,3,4]);
+      exchanger.write([5,6,7,8]);
+      rowData = exchanger.read(4);
       expect(rowData,[1,2,3,4]);
-      rowData = buffer.read(4);
+      rowData = exchanger.read(4);
       expect(rowData,[5,6,7,8]);
-      rowData = buffer.read(4);
+      rowData = exchanger.read(4);
       expect(rowData,[]);
     });
 
-    test('Exchange buffer II', () {
-      DataExchanger buffer = DataExchanger(8, outFun);
-      buffer.get(4);
-      buffer.put([1,2,3,4]);
-      buffer.put([5,6,7,8]);
-      buffer.get(4);
-      buffer.get(4);
-      buffer.get(4);
-      buffer.dispose();
+    test('Exchanger II', () {
+      DataExchanger exchanger = DataExchanger(8, outFun);
+      exchanger.get(4);
+      exchanger.put([1,2,3,4]);
+      exchanger.put([5,6,7,8]);
+      exchanger.get(4);
+      exchanger.get(4);
+      exchanger.get(4);
+      exchanger.dispose();
     });
 
-    test('Exchange buffer III', () async {
-      DataExchanger buffer = DataExchanger(8, outFun);
+    test('Exchanger III', () async {
+      DataExchanger exchanger = DataExchanger(8, outFun);
       EcgSimulator simulator = EcgSimulator(4);
-      ECGSensor sensor = ECGSensor(simulator, buffer);
-      ECGObserver observer = ECGObserver(4,buffer);
+      ECGSensor sensor = ECGSensor(simulator, exchanger);
+      ECGObserver observer = ECGObserver(4,exchanger);
       observer.start();
       sensor.start();
       await Future.delayed(Duration(milliseconds:4000));
       sensor.stop();
       await Future.delayed(Duration(milliseconds:1000));
       observer.stop();
-      buffer.dispose();
+      exchanger.dispose();
     });
 
 

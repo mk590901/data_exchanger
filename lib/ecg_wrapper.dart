@@ -16,7 +16,7 @@ class ECGWrapper {
   late  CircularBuffer<int> buffer_;
 
   late EcgSimulator simulator;
-  late DataExchanger exchangeBuffer;
+  late DataExchanger exchanger;
   late ECGSensor sensor;
 
   late  double  step;
@@ -34,8 +34,8 @@ class ECGWrapper {
 
   ECGWrapper(this._seriesLength, this._seriesNumber, this._drawSeriesLength, this._mode) {
     simulator = EcgSimulator(_seriesLength);
-    exchangeBuffer = DataExchanger(_seriesLength*2, outFun);
-    sensor = ECGSensor(simulator, exchangeBuffer);
+    exchanger = DataExchanger(_seriesLength*2, outFun);
+    sensor = ECGSensor(simulator, exchanger);
     rowData = List<int>.filled(_seriesLength, 0);
     buffer_ = CircularBuffer<int>(_seriesLength*_seriesNumber);
   }
@@ -74,7 +74,7 @@ class ECGWrapper {
     int seriesSize = seriesLength();
 
     if ((counter-1) == 0) {
-      exchangeBuffer.get(_seriesLength);
+      exchanger.get(_seriesLength);
     }
 
     List<int> dataExtracted = extractRangeData(rowData, (counter-1)*seriesSize, seriesSize);
