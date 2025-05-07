@@ -6,10 +6,10 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:ecg_buffer/ecg_sensor/ecg_observer.dart';
+import 'ecg_observer.dart';
 import 'package:ecg_buffer/ecg_sensor/ecg_sensor.dart';
 import 'package:ecg_buffer/ecg_simulator/ecg_simulator.dart';
-import 'package:ecg_buffer/exchange_bloc.dart';
+import 'exchange_bloc.dart';
 import 'package:ecg_buffer/exchange_buffer.dart';
 import 'package:ecg_buffer/message_handler.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,5 @@
 import 'dart:async';
-
-import '../ecg_simulator/ecg_simulator.dart';
-import '../exchange_buffer.dart';
+import 'package:ecg_buffer/exchange_buffer.dart';
 
 class ECGObserver {
   static int PERIOD = 1000;
