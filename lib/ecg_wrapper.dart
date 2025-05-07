@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'circular_buffer.dart';
 import 'ecg_sensor/ecg_sensor.dart';
 import 'ecg_simulator/ecg_simulator.dart';
-import 'exchange_buffer.dart';
+import 'data_exchanger.dart';
 import 'graph_mode.dart';
 import 'utils.dart';
 
-class StoreWrapper {
+class ECGWrapper {
 
   final int _drawSeriesLength;  //  Drawable data size per second
   final int _seriesNumber;      //  Data buffer size
@@ -16,7 +16,7 @@ class StoreWrapper {
   late  CircularBuffer<int> buffer_;
 
   late EcgSimulator simulator;
-  late ExchangeBuffer exchangeBuffer;
+  late DataExchanger exchangeBuffer;
   late ECGSensor sensor;
 
   late  double  step;
@@ -32,9 +32,9 @@ class StoreWrapper {
 
   late List<int> rowData;
 
-  StoreWrapper(this._seriesLength, this._seriesNumber, this._drawSeriesLength, this._mode) {
+  ECGWrapper(this._seriesLength, this._seriesNumber, this._drawSeriesLength, this._mode) {
     simulator = EcgSimulator(_seriesLength);
-    exchangeBuffer = ExchangeBuffer(_seriesLength*2, outFun);
+    exchangeBuffer = DataExchanger(_seriesLength*2, outFun);
     sensor = ECGSensor(simulator, exchangeBuffer);
     rowData = List<int>.filled(_seriesLength, 0);
     buffer_ = CircularBuffer<int>(_seriesLength*_seriesNumber);
@@ -75,10 +75,6 @@ class StoreWrapper {
 
     if ((counter-1) == 0) {
       exchangeBuffer.get(_seriesLength);
-      // List<int> buffer = simulator.generateBuffer();
-      // for (int i = 0; i < buffer.length; i++) {
-      //   rowData[i] = buffer[i];
-      // }
     }
 
     List<int> dataExtracted = extractRangeData(rowData, (counter-1)*seriesSize, seriesSize);

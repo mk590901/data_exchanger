@@ -5,7 +5,7 @@ import 'drawing_bloc.dart';
 import 'obtained.dart';
 import 'path_painter.dart';
 import 'states/drawing_state.dart';
-import 'store_wrapper.dart';
+import 'ecg_wrapper.dart';
 import 'graph_mode.dart';
 
 class GraphWidget extends StatelessWidget {
@@ -21,7 +21,7 @@ class GraphWidget extends StatelessWidget {
 
   bool _startStop = false;
 
-  late StoreWrapper storeWrapper;
+  late ECGWrapper storeWrapper;
 
   final Obtained obtain = Obtained.part(const Duration(milliseconds: FREQ));
 
@@ -36,7 +36,7 @@ class GraphWidget extends StatelessWidget {
         (samplesNumber.toDouble() / (PERIOD.toDouble() / FREQ.toDouble()))
                 .toInt() +
             1;
-    storeWrapper = StoreWrapper(samplesNumber, 5, pointsToDraw, mode);
+    storeWrapper = ECGWrapper(samplesNumber, 5, pointsToDraw, mode);
   }
 
   void setRefreshCallback(VoidCallback callback) {

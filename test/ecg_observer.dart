@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:ecg_buffer/exchange_buffer.dart';
+import 'package:ecg_buffer/data_exchanger.dart';
 
 class ECGObserver {
   static int PERIOD = 1000;
-  final ExchangeBuffer exchangeBuffer;
+  final DataExchanger exchangeBuffer;
   final int seriesLength;
   final Duration _period = Duration(milliseconds: PERIOD);
   late Timer? _timer;

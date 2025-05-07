@@ -1,10 +1,9 @@
 import 'dart:collection';
-
 import 'callback_fun_type.dart';
 import 'circular_buffer.dart';
 import 'message_handler.dart';
 
-class ExchangeBuffer {
+class DataExchanger {
   late  CircularBuffer<double> buffer_;
   final int _bufferLength;
   final Queue<List<double>>	_dataQueue	= Queue<List<double>>();
@@ -12,7 +11,7 @@ class ExchangeBuffer {
   final MessageHandler handler = MessageHandler<VoidCallback?>();
   final ListCallback? callback;
 
-  ExchangeBuffer(this._bufferLength, this.callback) {
+  DataExchanger(this._bufferLength, this.callback) {
     buffer_ = CircularBuffer<double>(_bufferLength + 1);
     handler.messages.listen((callback) {
       callback?.call();

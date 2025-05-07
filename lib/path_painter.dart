@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'store_wrapper.dart';
+import 'ecg_wrapper.dart';
 import 'circular_buffer.dart';
 import 'graph_mode.dart';
 
 class PathPainter extends CustomPainter {
   int counter;
 
-  final StoreWrapper _storeWrapper;
+  final ECGWrapper _storeWrapper;
 
   late CircularBuffer<int>
     buffer;

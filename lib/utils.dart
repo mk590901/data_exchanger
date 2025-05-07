@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'circular_buffer.dart';
-import 'store_wrapper.dart';
+import 'ecg_wrapper.dart';
 
 List<int> extractRangeData(final List<int> rowData, final int start, final int number) {
   List<int> result = <int>[];
@@ -125,7 +125,7 @@ List<int> dataSeriesOverlay(CircularBuffer<int> buffer) {
   return result;
 }
 
-List<int> dataSeriesNormal(StoreWrapper storeWrapper) {
+List<int> dataSeriesNormal(ECGWrapper storeWrapper) {
   storeWrapper.storeCircularBufferParams();
   List<int> result = storeWrapper.buffer().getData();
   storeWrapper.restoreCircularBufferParams();

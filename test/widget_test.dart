@@ -10,7 +10,7 @@ import 'ecg_observer.dart';
 import 'package:ecg_buffer/ecg_sensor/ecg_sensor.dart';
 import 'package:ecg_buffer/ecg_simulator/ecg_simulator.dart';
 import 'exchange_bloc.dart';
-import 'package:ecg_buffer/exchange_buffer.dart';
+import 'package:ecg_buffer/data_exchanger.dart';
 import 'package:ecg_buffer/message_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -115,7 +115,7 @@ void main() {
     });
 
     test('Exchange buffer I', () {
-      ExchangeBuffer buffer = ExchangeBuffer(8, null);
+      DataExchanger buffer = DataExchanger(8, null);
       List<double> rowData = buffer.read(4);
       expect(rowData,[]);
       buffer.write([1,2,3,4]);
@@ -129,7 +129,7 @@ void main() {
     });
 
     test('Exchange buffer II', () {
-      ExchangeBuffer buffer = ExchangeBuffer(8, outFun);
+      DataExchanger buffer = DataExchanger(8, outFun);
       buffer.get(4);
       buffer.put([1,2,3,4]);
       buffer.put([5,6,7,8]);
@@ -140,7 +140,7 @@ void main() {
     });
 
     test('Exchange buffer III', () async {
-      ExchangeBuffer buffer = ExchangeBuffer(8, outFun);
+      DataExchanger buffer = DataExchanger(8, outFun);
       EcgSimulator simulator = EcgSimulator(4);
       ECGSensor sensor = ECGSensor(simulator, buffer);
       ECGObserver observer = ECGObserver(4,buffer);
