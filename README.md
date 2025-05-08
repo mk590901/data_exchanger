@@ -142,6 +142,15 @@ test('Exchanger II', () {
     });
 ```
 
+Output
+
+```
+Get Data II->[]
+Get Data II->[1.0, 2.0, 3.0, 4.0]
+Get Data II->[5.0, 6.0, 7.0, 8.0]
+Get Data II->[]
+```
+
 and
 
 ```dart
@@ -158,6 +167,37 @@ and
       observer.stop();
       exchanger.dispose();
     });
+```
+
+Output
+
+```
+ECG Generator Parameters:
+Approximate number of heart beats: 1000
+ECG sampling frequency: 4.0 Hertz
+Internal sampling frequency: 8.0 Hertz
+Amplitude of additive noise: 0.04 mV
+Heart rate mean: 60.0 beats per minute
+Heart rate std: 1.0 beats per minute
+Low frequency: 0.1 Hertz
+High frequency: 0.25 Hertz
+Low frequency std: 0.01 Hertz
+High frequency std: 0.01 Hertz
+LF/HF ratio: 0.5
+Order of Extrema (P, Q, R, S, T):
+theta(radians): [-1.2217304763960306, -0.2617993877991494, 0.0, 0.2617993877991494, 1.7453292519943295]
+a(mV): [1.2, -5.0, 30.0, -7.5, 0.75]
+b(radians): [0.25, 0.1, 0.1, 0.1, 0.4]
+------- ECGObserver.start -------
+------- ECGSensor.start -------
+Get Data II->[]
+Get Data II->[-0.2825161062209391, 1.1892126448215978, -0.2312720545623088, -0.4224471483670395]
+Get Data II->[-0.40814850474155906, 0.06169642583115337, -0.37650870745111775, -0.26725277553813254]
+Get Data II->[-0.376418414980368, -0.14018028298825697, -0.328227369154548, -0.15141213060063455]
+------- ECGSensor.stop -------
+Get Data II->[]
+------- ECGObserver.stop -------
+
 ```
 
 ## Movie
